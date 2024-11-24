@@ -1,0 +1,20 @@
+groups:
+  - name: example_alerts
+    rules:
+      - alert: HighRequestDuration
+        expr: http_duration_seconds_sum{job="my_app"} > 5
+        for: 2m
+        labels:
+          severity: "critical"
+        annotations:
+          summary: "Request duration is too high."
+          description: "Request duration for {{ $labels.path }} is greater than 5 seconds."
+      
+      - alert: HighRequestCount
+        expr: http_requests_total{job="my_app"} > 1000
+        for: 1m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "Request count is too high."
+          description: "More than 1000 requests have been made in the last minute."
